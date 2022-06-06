@@ -1,4 +1,6 @@
+import 'package:ecommerce/models/richtext.dart';
 import 'package:ecommerce/provider.dart';
+import 'package:ecommerce/screens/signin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,7 +79,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             ],
                           )
                         : Container(
-                            width: widget.mediaQueryData.size.width / 2.4,
+                            width: 180,
                             child: RichText(
                               text: TextSpan(
                                   text:
@@ -88,15 +90,21 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                           .bodyText1!
                                           .color),
                                   children: [
-                                    TextSpan(
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            //todo log in here
-                                          },
-                                        text: 'Log In',
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold))
+                                    MouseRegionSpan(
+                                        // this is a class (MouseRegionSpan) that we created manually to wrap TextSpan with MouseRegion because you can't wrap TextSpan with MouseRegion directly inside children of another TextSpan
+
+                                        mouseCursor: SystemMouseCursors.click,
+                                        inlineSpan: TextSpan(
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.pop(context);
+                                                Navigator.pushNamed(
+                                                    context, '/signin');
+                                              },
+                                            text: 'Log In',
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold)))
                                   ]),
                             )))
               ],
@@ -114,7 +122,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 child: Column(
                   children: [
                     DrawerButtons(
-                        title: 'Home', icon: Icons.home, callBack: () {}),
+                        title: 'Home',
+                        icon: Icons.home,
+                        callBack: () {
+                          Navigator.popUntil(context, ModalRoute.withName('/'));
+                        }),
                     DrawerButtons(
                       title: 'Categories',
                       icon: Icons.category,
@@ -214,7 +226,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         callBack: () {
                           providerValue.getIsLoggedIn
                               ? providerValue.setIsLoggedIn(false)
-                              : null;
+                              : Navigator.pushNamed(context, '/signin');
                         }),
                     DrawerButtons(
                         title: 'About Us', icon: Icons.info, callBack: () {}),

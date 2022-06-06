@@ -39,6 +39,16 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ClassProvider>(context).IsDark();
+      Provider.of<ClassProvider>(context).IsLoggedIn();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     double sWidth = mediaQueryData.size.width;
@@ -66,8 +76,21 @@ class _MainScreenState extends State<MainScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    SizedBox(),
+                    Visibility(
+                      visible: mediaQueryData.size.width > 700 ? true : false,
+                      child: Container(
+                        child: const Text(
+                          '     MyWebsite',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ),
+                    ),
                     Row(children: [
                       Container(
                         width: kIsWeb ? mediaQueryData.size.width / 3 : 270,
@@ -120,18 +143,6 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                       )
                     ]),
-                    Visibility(
-                      visible: false,
-                      child: Container(
-                        child: const Text(
-                          'MyWebsite',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.orange,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -144,10 +155,11 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Container(
                 width: double.infinity,
-                height: mediaQueryData.size.height / 4,
+                height: sHeight / 4,
                 child: CarouselSlider(
                     options: CarouselOptions(
-                      height: mediaQueryData.size.height / 5,
+                      height: sHeight / 5,
+                      
                       autoPlay: true,
                     ),
                     items: swipeImages
@@ -163,8 +175,8 @@ class _MainScreenState extends State<MainScreen> {
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: AssetImage(e)),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(30))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30))),
                                 ),
                               ),
                             ))
@@ -177,8 +189,8 @@ class _MainScreenState extends State<MainScreen> {
                       padding: EdgeInsets.only(left: 12, bottom: 10),
                       child: Text(
                         'All Products',
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       )),
                   GridView.builder(
                     itemCount: 10,
@@ -189,7 +201,8 @@ class _MainScreenState extends State<MainScreen> {
                       padding: EdgeInsets.all(1),
                       child: Card(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -212,7 +225,8 @@ class _MainScreenState extends State<MainScreen> {
                                 children: [
                                   Text(
                                     '\$45.6',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Text('Name'),
                                 ],
@@ -223,9 +237,14 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: (mediaQueryData.size.width /
-                            (mediaQueryData.size.height / 2.1))),
+                        crossAxisCount: mediaQueryData.size.width < 500
+                            ? 2
+                            : mediaQueryData.size.width < 700
+                                ? 3
+                                : mediaQueryData.size.width < 900
+                                    ? 4
+                                    : 5,
+                        childAspectRatio: sHeight / 1000),
                   ),
                 ],
               )

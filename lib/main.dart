@@ -1,16 +1,13 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:ecommerce/provider.dart';
+import 'package:ecommerce/screens/signin.dart';
+import 'package:ecommerce/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/mainScreen.dart';
 
 void main() {
   runApp(
-    ListenableProvider(
-      create: (context) => ClassProvider(),
-      child: MyApp()
-    ));
+      ListenableProvider(create: (context) => ClassProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,6 +32,12 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.grey.shade900,
           )),
       themeMode: Provider.of<ClassProvider>(context).currentTheme(),
+      initialRoute: '/home',
+      routes: <String, WidgetBuilder>{
+        '/home': (context) => MainScreen(),
+        '/signin': (context) => SignIn(),
+        '/signup': (context) => SignUp()
+      },
       home: MainScreen(),
     );
   }

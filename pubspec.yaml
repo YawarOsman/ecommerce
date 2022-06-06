@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.1.1
   provider: ^6.0.3
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,8 @@ flutter:
     - assets/images/toys-2.jpeg
     - assets/images/toys-3.jpeg
     - assets/images/notLoggedInProfile.png
+    - assets/images/facebook.png
+    - assets/images/google.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
