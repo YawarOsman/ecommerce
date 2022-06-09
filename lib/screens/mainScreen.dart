@@ -3,6 +3,7 @@ import 'package:ecommerce/models/drawer.dart';
 import 'package:ecommerce/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -43,8 +44,8 @@ class _MainScreenState extends State<MainScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<ClassProvider>(context).IsDark();
-      Provider.of<ClassProvider>(context).IsLoggedIn();
+      Provider.of<ClassProvider>(context, listen: false).IsDark();
+      Provider.of<ClassProvider>(context, listen: false).IsLoggedIn();
     });
   }
 
@@ -159,7 +160,6 @@ class _MainScreenState extends State<MainScreen> {
                 child: CarouselSlider(
                     options: CarouselOptions(
                       height: sHeight / 5,
-                      
                       autoPlay: true,
                     ),
                     items: swipeImages
