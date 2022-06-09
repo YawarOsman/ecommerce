@@ -1,15 +1,20 @@
-import 'package:ecommerce/provider.dart';
-import 'package:ecommerce/screens/signin.dart';
-import 'package:ecommerce/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'models/dbConnection.dart';
+import 'provider.dart';
+import 'screens/signin.dart';
+import 'screens/signup.dart';
+
 import 'package:provider/provider.dart';
 import 'screens/mainScreen.dart';
 
 void main() async {
-  dotenv.load();
+  await dotenv.load();
   runApp(
       ListenableProvider(create: (context) => ClassProvider(), child: MyApp()));
+
+  DbCon().connection();
 }
 
 class MyApp extends StatelessWidget {
